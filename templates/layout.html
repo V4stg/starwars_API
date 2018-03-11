@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Star Wars API</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"
+            defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"
+            defer></script>
+</head>
+<body>
+<nav class="navbar-light navbar-toggleable-md bg-light">
+    <div class="row">
+        <div class="col-sm-2">
+            <a href="{{ url_for('index') }}"><img src="/static/piggy.jpg" alt="Logo"></a>
+        </div>
+        {% if 'username' in session %}
+            <div class="col-sm">
+                <a class="navbar-brand" href={{ url_for('index') }}>Planets</a>
+            </div>
+        {% endif %}
+        {% if 'username' not in session %}
+            <div class="col-sm float-right" >
+                <a class="btn btn-outline-success my-2 my-sm-0 float-right" href="/signup">Sign Up</a>
+                <form action="/login" method='POST' class="form-inline my-2 my-lg-0 float-right">
+                    <input name="username" type="text" class="form-control mr-sm-2 float-right" aria-label="Username">
+                    <input name="password" type="password" class="form-control mr-sm-2 float-right" aria-label="Password">
+                    <button class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit">Login</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="col-sm-3 float-right">
+                <div class="col-sm-1 float-right">
+                <form action="/logout" class="form-inline my-2 my-lg-0 float-right">
+                    <button class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit">Logout</button>
+                </form>
+                </div>
+                <div class="col-sm-2 float-center">
+                    <div>{{ session.username }}</div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>
